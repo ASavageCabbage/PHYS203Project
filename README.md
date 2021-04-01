@@ -55,3 +55,4 @@ General ideas
 - bonds breaking is done by pulling/adding energy to different phases
 - everything is done with energy/mole, pressure, heat capacity assumed to be constant
 - heat capacity is used to compute changes in entropy
+- salt assumed to only dissolve in water, changes in entropy due to that specific to the water class
