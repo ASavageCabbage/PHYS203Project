@@ -42,9 +42,12 @@ Internal Energy/Entropy of Water/Ice
 - use enthalpy of formation to determine energy of water/ice?
 
 Changes in salt concentration
-- things will dilute as ice melts, which maybe changes internal energy of saltwater in a weird way?
-- assume salt concentrations are low enough that the change in energy is same for all volumes?
+- things will dilute as ice melts, which maybe changes internal energy of saltwater in a weird way
+    - UPDATE: the plan is to account for this, just treat it like adding U of pure water
+- assume salt concentrations are low enough that the change in energy is same for all volumes
+    - UPDATE: everything is now done per mole, this is not an issue
 - how can we calculate the affect on entropy? use entropy of mixing, neglect energy affects?
+    - this general idea, maybe assume the energy released during mixing doesn't affect temperature?
 
 Chemical potential
 - do we need to factor it in? I don't think so
@@ -53,6 +56,7 @@ General ideas
 - main idea with phase is to compute the chemical potential (sort of, change in gibbs from adding
 - or removing a mole) and have system use that to get probability of bond breaking
 - bonds breaking is done by pulling/adding energy to different phases
-- everything is done with energy/mole, pressure, heat capacity assumed to be constant
-- heat capacity is used to compute changes in entropy
-- salt assumed to only dissolve in water, changes in entropy due to that specific to the water class
+- everything is done with pressure assumed to be constant, heat capacity assumed to be constant
+- with respect to temperature
+- heat capacity is used to compute changes in entropy from heat
+- salt assumed to only dissolve in water
