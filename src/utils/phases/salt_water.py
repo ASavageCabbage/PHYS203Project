@@ -1,9 +1,7 @@
 ## salwater phase
-## Last updated: 02/04/2021
-## is python style to use getters and setters?
+## Last updated: 03/04/2021
 
-# there's got to be a more elegant way than this nonsense
-from phase import Phase
+from utils.phases import Phase
 
 # all quantities (U, S, G) should be measured as quantities of formation
 # for STP conditions, tabulated in standard metric units
@@ -37,8 +35,8 @@ class Saltwater(Phase):
     
     ## Molar quantity functions
 
-    # calculates molar heat capacity (at constant pressure) as a function of
-    # salt concentration
+    # calculates molar heat capacity (at constant pressure)
+    # with the current salt concentration
     def calc_c_molar(self):
         pass
 
@@ -54,7 +52,7 @@ class Saltwater(Phase):
 
     # calculates current gibbs per mole of phase
     def calc_G_molar(self):
-        return self.U_molar + P_ATM/p - self.T*self.S_molar
+        return self.U_molar + P_ATM/p - self.T*self.S_molar # TODO: replace this with a function from utils.absolute?
 
     # updates all molar quantities
     def update_molar(self):
