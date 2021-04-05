@@ -69,3 +69,6 @@ General ideas
 - with respect to temperature
 - heat capacity is used to compute changes in entropy from heat
 - salt assumed to only dissolve in water
+
+## Unresolved Issues
+- currently unknown whether an animation object works in a static class

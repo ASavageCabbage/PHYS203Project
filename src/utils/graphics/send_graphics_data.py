@@ -1,0 +1,1 @@
+# methods to send graphics data to process
