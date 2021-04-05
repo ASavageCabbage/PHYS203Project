@@ -82,7 +82,7 @@ class Saltwater(Phase):
 
     # adds/removes an amount of energy e from the system as heat, and updates
     # system accordingly
-    def change_energy(self, e):
+    def add_heat(self, e):
         self.T = e/(self.c_molar * n_water)
         self.update()
 

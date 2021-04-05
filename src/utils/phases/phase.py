@@ -21,7 +21,7 @@ class Phase:
 
     # adds/removes an amount of energy e from the system as heat, and updates
     # temperature accordingly
-    def change_energy(self, e):
+    def add_heat(self, e):
         pass
 
     

@@ -52,6 +52,11 @@ Changes in salt concentration
 Chemical potential
 - do we need to factor it in? I don't think so
 
+Heat flow
+- maybe use thermal conductivity to model spontaneous heat flow?
+- equation 2: https://en.wikipedia.org/wiki/Thermal_contact_conductance
+- also maybe useful: https://phas.ubc.ca/~kiefl/ch15_part2.pdf
+
 General ideas
 - main idea with phase is to compute the chemical potential (sort of, change in gibbs from adding
 - or removing a mole) and have system use that to get probability of bond breaking
