@@ -1,9 +1,9 @@
 ## class handling the interplay of different distinct phases in a system
 ## Last updated: 05/04/2021
 
-import phases
-import absolute
-import differential
+import utils.phases
+import utils.absolute
+import utils.differential
 
 class System:
 
@@ -63,7 +63,7 @@ class System:
     # also adds on heat flow due to energy required to break/form bonds in solid
     # equation 2 here is good https://en.wikipedia.org/wiki/Thermal_contact_conductance
     # TODO: this method
-    def net_heat(self particle_flow):
+    def net_heat(self, particle_flow):
         pass
 
     # inputs the particle and heat flow into the phases
