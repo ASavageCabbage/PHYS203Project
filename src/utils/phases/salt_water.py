@@ -1,5 +1,5 @@
 ## salwater phase
-## Last updated: 03/04/2021
+## Last updated: 05/04/2021
 
 from utils.phases import Phase
 
@@ -11,6 +11,7 @@ from utils.phases import Phase
 # and are assumed to be constant with respect to temperature
 ## TODO add function (or like derive it first) that does this
 # https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=2
+## TODO: Fix calculating initial quantities based on temperature
 
 class Saltwater(Phase):
     

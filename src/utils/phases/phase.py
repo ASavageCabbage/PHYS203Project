@@ -1,12 +1,11 @@
 ## parent (abstract) class for a phase
-## Last updated: 02/04/2021
+## Last updated: 05/04/2021
 ## is python style to use getters and setters?
 ## this still needs to be finished, I just wanted to move
 ## on to making an implementation to get a better idea of
 ## what's going on here
 ## THIS IS ONLY INTENDED TO SPECIFY WHAT SYSTEM ACCESS FUNCTIONS
 ## ARE NEEDED, NOTHING ELSE
-## TODO Move test_add functionality to system (ask Justin)
 
 class Phase:
 
