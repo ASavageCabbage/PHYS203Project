@@ -1,5 +1,9 @@
 # PHYS 203 Project
 
+## Usage
+
+Navigate to the `src` directory and run `python main.py <args>`. Call `main.py -h` for help.
+
 ## Overview
 Simulation of ice-water transition with and without the presence of salt.
 - Macroscopic descriptions of stability (internal energy, Gibbs free energy, entropy, etc.)
