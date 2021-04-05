@@ -1,10 +1,6 @@
 ## class handling the interplay of different distinct phases in a system
 ## Last updated: 05/04/2021
 
-import utils.phases
-import utils.absolute
-import utils.differential
-
 class System:
 
     def __init__(self, liquid, solid, step=0, area=0):
