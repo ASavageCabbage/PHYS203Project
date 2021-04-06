@@ -44,6 +44,7 @@ Internal Energy/Entropy of Water/Ice
 - tabulate on per-molar basis, assume this is roughly constant with temperature?
 - calculate changes in temperature by assuming constant heat capacity, use function to model?
 - use enthalpy of formation to determine energy of water/ice?
+- we need to make sure all quatities are measured relative to the same point
 
 Changes in salt concentration
 - things will dilute as ice melts, which maybe changes internal energy of saltwater in a weird way

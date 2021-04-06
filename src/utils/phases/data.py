@@ -35,39 +35,41 @@ LIQUID_WATER_MOLAR_CONC = 55.5e-3
 # Standard molar enthalpy of formation (J/mol)
 LIQUID_WATER_HF = -285830
 
+# Standard salt enthalpy of formation (J/mol)
+# https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=6F
+SALT_HF = -411120
+
+# Standard enthalpy of solution for salt (J/mol) (infinitely dilute solution)
+# http://hbcponline.com/faces/documents/05_13/05_13_0005.xhtml
+SALT_SOLUTION_H = 3880
+
+# Standard molar entropy of H2 (J/mol K) (all from NIST)
+GAS_H_S = 130.68
+
+# Standard molar entropy of 02 (J/mol K)
+GAS_O_S = 205.15
+
+# Standard molar entropy of Na (J/mol K)
+SOLID_NA_S = 51.46
+
+# Standard molar entropy of Cl2 (J/mol K)
+GAS_CL_S = 223.08
+
+# Standard molar entropy of NaCl (J/mol K)
+SOLID_SALT_S = 72.11
+
+# Standard molar entropy of formation of salt (J/mol K)
+SOLID_SALT_SR = SOLID_SALT_S - SOLID_NA_S - GAS_CL_S/2
+
 # Standard molar entropy (J/mol K)
 LIQUID_WATER_S = 69.95
 
+# Standard molar entropy of formation of water (J/mol K)
+LIQUID_WATER_SR = LIQUID_WATER_S - GAS_H_S - GAS_O_S/2
+
 # From https://www.engineeringtoolbox.com/specific-heat-capacity-water-d_660.html
-# (J/mol K)
-LIQUID_WATER_CP = {
-    0:   76.026,
-    10:  75.586,
-    20:  75.386,
-    25:  75.336,
-    30:  75.309,
-    40:  75.300,
-    50:  75.334,
-    60:  75.399,
-    70:  75.491,
-    80:  75.611,
-    90:  75.763,
-    100: 75.950,
-    110: 76.177,
-    120: 76.451,
-    140: 77.155,
-    160: 78.107,
-    180: 79.360,
-    200: 80.996,
-    220: 83.137,
-    240: 85.971,
-    260: 89.821,
-    280: 95.285,
-    300: 103.60,
-    320: 117.78,
-    340: 147.88,
-    360: 270.31
-}
+# (J/mol K) at 0C
+LIQUID_WATER_CP = 76.026
 
 # From https://pubs.acs.org/doi/pdf/10.1021/ja01377a001 (page 331)
 # Molality of NaCl vs heat capacity of solution
