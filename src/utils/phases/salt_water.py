@@ -14,14 +14,13 @@ from utils.absolute import enthalpy, gibbs
 # and are assumed to be constant with respect to temperature
 ## TODO add function (or like derive it first) that does this
 # https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=2
-## TODO: Fix calculating initial quantities based on temperature
+## NOTE: stuff only works for liquid water rn
 
 class Saltwater(Phase):
 
     # initializes water to default STP conditions, no salt
     # takes number of moles of water as input
     def __init__(self, n):
-        ## TODO Update this with proper values
         self.n_salt = 0 # number of moles of salt
         self.n_water = n
         self.T = STP_T
@@ -31,7 +30,6 @@ class Saltwater(Phase):
 
     # calculates molar heat capacity (at constant pressure)
     # with the current salt concentration
-    # NOTE: Only works for liquid water (should it work for ice?)
     def calc_c_molar(self):
         molarity = self.n_salt / self.n_water
         relative_cp = find_nearest_value(molarity, NACL_MOLAR_RELATIVE_CP)
@@ -40,7 +38,6 @@ class Saltwater(Phase):
 
     # calculates internal energy per mole as a function of salt concentration
     # and temperature
-    # TODO: Write this function
     def calc_U_molar(self):
         stp_U = LIQUID_WATER_HF - STP_P/LIQUID_WATER_MOLAR_CONC
         delta_T = self.T - STP_T
