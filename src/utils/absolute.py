@@ -7,7 +7,7 @@ def U_ideal(f, n, T):
     return (f/2) * n * constants.R * T
 
 def enthalpy(U, P, V):
-    return U + PV
+    return U + P*V
 
 def helmholtz(U, S, T):
     return U - S*T

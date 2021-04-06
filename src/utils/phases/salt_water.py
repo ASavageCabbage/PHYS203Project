@@ -1,7 +1,10 @@
-## salwater phase
-## Last updated: 05/04/2021
+# saltwater phase
 
-from utils.phases import Phase
+import logging
+import numpy as np
+
+from utils.phases import *
+from utils.absolute import enthalpy, gibbs
 
 # all quantities (U, S, G) should be measured as quantities of formation
 # for STP conditions, tabulated in standard metric units
@@ -14,52 +17,54 @@ from utils.phases import Phase
 ## TODO: Fix calculating initial quantities based on temperature
 
 class Saltwater(Phase):
-    
-    p = 0 ## TODO update this, concentration of pure water in mol/m^3
-    pure_U_molar = -285830 # enthalpy of formation of pure water
-    pure_c_molar = 0 # TODO update this, molar heat capacity of pure water
 
     # initializes water to default STP conditions, no salt
     # takes number of moles of water as input
     def __init__(self, n):
         ## TODO Update this with proper values
-        self.U_molar = pure_U_molar # energy per mole of water
         self.n_salt = 0 # number of moles of salt
         self.n_water = n
-        self.c_molar = self.calc_c_molar()
-        self.S_molar = 0 # TODO calculate this
-        self.U = self.U_molar * self.n_water # internal energy
-        self.S = self.S_molar * self.n_water # entropy
-        self.T = 298 # temperature
-        self.G_molar = self.calc_G_molar()
-        self.G = G_molar * self.n_water # gibbs's free energy
+        self.T = STP_T
+        self.update()
     
     ## Molar quantity functions
 
     # calculates molar heat capacity (at constant pressure)
     # with the current salt concentration
+    # NOTE: Only works for liquid water (should it work for ice?)
     def calc_c_molar(self):
-        pass
+        molarity = self.n_salt / self.n_water
+        relative_cp = find_nearest_value(molarity, NACL_MOLAR_RELATIVE_CP)
+        pure_cp = find_nearest_value(self.T, LIQUID_WATER_CP)
+        return relative_cp * pure_cp
 
     # calculates internal energy per mole as a function of salt concentration
     # and temperature
     # TODO: Write this function
     def calc_U_molar(self):
-        pass
+        stp_U = LIQUID_WATER_HF - STP_P/LIQUID_WATER_MOLAR_CONC
+        delta_T = self.T - STP_T
+        return stp_U - self.c_molar*delta_T
 
     # calculates molar entropy as a function of salt concentration, temperature
     def calc_S_molar(self):
-        pass
+        return LIQUID_WATER_S - self.c_molar*np.log(self.T/STP_T)
 
     # calculates current gibbs per mole of phase
     def calc_G_molar(self):
-        return self.U_molar + P_ATM/p - self.T*self.S_molar # TODO: replace this with a function from utils.absolute?
+        H = enthalpy(self.U_molar, STP_P, 1/LIQUID_WATER_MOLAR_CONC)
+        return gibbs(H, self.T, self.S_molar)
 
     # updates all molar quantities
     def update_molar(self):
+        self.c_molar = self.calc_c_molar()
         self.U_molar = self.calc_U_molar()
         self.S_molar = self.calc_S_molar()
         self.G_molar = self.calc_G_molar()
+        logging.debug(
+            "Updated molar values:\n"
+         + f"Cp = {self.c_molar}, U = {self.U_molar}, S = {self.S_molar}, G = {self.G_molar}"
+        )
 
     ## Non-molar quantity functions
 
@@ -68,10 +73,15 @@ class Saltwater(Phase):
         self.U = self.U_molar * self.n_water
         self.S = self.S_molar * self.n_water
         self.G = self.G_molar * self.n_water
+        logging.debug(
+            "Updated non-molar values:\n"
+         + f"U = {self.U}, S = {self.S}, G = {self.G}"
+        )
 
-    # updates all quantities (except temperature, moles)
+    # updates everything
     def update(self):
-        update_molar()
+        self.update_molar()
+        self.update_non_molar()
 
     ## System access functions
 
