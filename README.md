@@ -44,6 +44,7 @@ Internal Energy/Entropy of Water/Ice
 - tabulate on per-molar basis, assume this is roughly constant with temperature?
 - calculate changes in temperature by assuming constant heat capacity, use function to model?
 - use enthalpy of formation to determine energy of water/ice?
+- we need to make sure all quatities are measured relative to the same point
 
 Changes in salt concentration
 - things will dilute as ice melts, which maybe changes internal energy of saltwater in a weird way
@@ -53,13 +54,13 @@ Changes in salt concentration
 - how can we calculate the affect on entropy? use entropy of mixing, neglect energy affects?
     - this general idea, maybe assume the energy released during mixing doesn't affect temperature?
 
-Chemical potential
-- do we need to factor it in? I don't think so
-
-Heat flow
+Heat flow --> Low priority, implement last
 - maybe use thermal conductivity to model spontaneous heat flow?
 - equation 2: https://en.wikipedia.org/wiki/Thermal_contact_conductance
 - also maybe useful: https://phas.ubc.ca/~kiefl/ch15_part2.pdf
+
+Heat capacity
+- taking the heat capacity in steps might fail for large temperature changes
 
 General ideas
 - main idea with phase is to compute the chemical potential (sort of, change in gibbs from adding
