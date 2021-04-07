@@ -7,7 +7,7 @@ from utils.phases import *
 from utils.absolute import enthalpy, gibbs
 
 # all quantities (H, S, G) should be measured as quantities of formation
-# for STP conditions, tabulated in standard metric units
+# for SATP conditions, tabulated in standard metric units
 # the volume of water is assumed to be unaffected by dissolved salt
 # pressure is assumed to be constant and atmospheric
 # heat capacities have to be adjusted based on the salt concentration,
@@ -17,15 +17,15 @@ from utils.absolute import enthalpy, gibbs
 
 class Saltwater(Phase):
 
-    # initializes water to default STP conditions, no salt
+    # initializes water to default SATP conditions, no salt
     # then adjusts to the given temperature
     # takes number of moles of water and temperature as input
     def __init__(self, n, T):
         self.n_salt = 0 # number of moles of salt
         self.n_water = n
-        self.T = STP_T
+        self.T = SATP_T
         self.update()
-        self.add_heat(self.c_molar*self.n_water*(T - STP_T)) # cool system
+        self.add_heat(self.c_molar*self.n_water*(T - SATP_T)) # cool system
     
     ## Molar quantity functions
 
@@ -40,14 +40,14 @@ class Saltwater(Phase):
     # calculates enthalpy of formatino per mole as a function of salt concentration
     # and temperature, assumes constant pressure and density
     def calc_H_molar(self):
-        stp_H = LIQUID_WATER_HF + SALT_HF + (self.n_salt/self.n_water)*SALT_SOLUTION_H
-        delta_T = self.T - STP_T
-        return stp_H - self.c_molar*delta_T
+        satp_H = LIQUID_WATER_HF + SALT_HF + (self.n_salt/self.n_water)*SALT_SOLUTION_H
+        delta_T = self.T - STAP_T
+        return satp_H - self.c_molar*delta_T
 
     # calculates molar entropy of formation as a function of salt concentration, temperature
     def calc_S_molar(self):
-        S_stp = LIQUID_WATER_SR + (self.n_salt/self.n_water)*SOLID_SALT_SR
-        return S_stp - self.c_molar*np.log(self.T/STP_T)
+        S_satp = LIQUID_WATER_SR + (self.n_salt/self.n_water)*SOLID_SALT_SR
+        return S_satp - self.c_molar*np.log(self.T/STAP_T)
 
     # calculates current gibbs per mole of phase
     def calc_G_molar(self):
@@ -101,4 +101,3 @@ class Saltwater(Phase):
     def add_heat(self, e):
         self.T = e/(self.c_molar * n_water)
         self.update()
-

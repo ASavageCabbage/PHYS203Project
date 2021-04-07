@@ -1,3 +1,6 @@
+# TODO: Manually calculate the heat of formation and standard entropy for
+# ice at STP
+
 # Helper functions
 def find_nearest_value(key, table):
     '''
@@ -23,8 +26,9 @@ def find_nearest_value(key, table):
 
 # tables of constants
 
-# Standard temperature (K)
-STP_T = 298
+# Standard temperatures (K)
+STAP_T = 298
+STP_T = 273
 
 # Standard pressure (Pa)
 STP_P = 101325
@@ -34,6 +38,9 @@ LIQUID_WATER_MOLAR_CONC = 55.5e-3
 
 # Standard molar enthalpy of formation (J/mol)
 LIQUID_WATER_HF = -285830
+
+# Standard molar enthalpy of formation (J/mol)
+ICE_HF = 0 # TODO: Find this
 
 # Standard salt enthalpy of formation (J/mol)
 # https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=6F
@@ -61,11 +68,17 @@ SOLID_SALT_S = 72.11
 # Standard molar entropy of formation of salt (J/mol K)
 SOLID_SALT_SR = SOLID_SALT_S - SOLID_NA_S - GAS_CL_S/2
 
-# Standard molar entropy (J/mol K)
+# Standard molar entropy of liquid water (J/mol K)
 LIQUID_WATER_S = 69.95
 
 # Standard molar entropy of formation of water (J/mol K)
 LIQUID_WATER_SR = LIQUID_WATER_S - GAS_H_S - GAS_O_S/2
+
+# Standard molar entropy of solid ice (J/mol K)
+ICE_S = 0 # TODO: FIND THIS
+
+# Standard molar entropy of formation of solid ice (J/mol K)
+ICE_SR = ICE_S - GAS_H_S - GAS_O_S/2
 
 # From https://www.engineeringtoolbox.com/specific-heat-capacity-water-d_660.html
 # (J/mol K) at 0C
@@ -93,4 +106,15 @@ NACL_MOLAL_CP = {
 # Molarity of NaCl solution vs relative heat capacity of solution (Cp soln / Cp pure)
 NACL_MOLAR_RELATIVE_CP = {
     key/(1000/18): val/NACL_MOLAL_CP[0.00] for key, val in NACL_MOLAL_CP.items()
+}
+
+# From https://www.engineeringtoolbox.com/ice-thermal-properties-d_576.html
+# (J/mol K) at 0C
+ICE_CP = {
+    273: 2.050,
+    268: 2.027,
+    263: 2.000,
+    258: 1.972,
+    253: 1.943,
+    248: 1.913
 }
