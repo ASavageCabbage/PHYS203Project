@@ -4,7 +4,7 @@ import logging
 import argparse
 
 from testing.imports import list_all_modules
-from testing.phase import test_init_saltwater
+from testing.phase import test_init_saltwater, test_init_ice
 
 def main():
     parser = argparse.ArgumentParser(description='Application entrypoint.')
@@ -23,6 +23,7 @@ def main():
         list_all_modules()
     if 'phase' in args.test_tasks:
         test_init_saltwater()
+        test_init_ice()
     #
     # Rest of application functionality goes here
     #

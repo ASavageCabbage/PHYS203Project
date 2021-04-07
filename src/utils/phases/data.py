@@ -12,7 +12,11 @@ def find_nearest_value(key, table):
         return table[key]
     
     ordered_keys.sort()
-    prev = [i for i, item in enumerate(ordered_keys) if item < key][-1]
+    smaller = [i for i, item in enumerate(ordered_keys) if item < key]
+    if len(smaller) > 0:
+        prev = smaller[-1]
+    else:
+        prev = len(ordered_keys) - 1
     before = ordered_keys[prev]
     try:
         after = ordered_keys[prev + 1]
@@ -27,7 +31,7 @@ def find_nearest_value(key, table):
 # tables of constants
 
 # Standard temperatures (K)
-STAP_T = 298
+SATP_T = 298
 STP_T = 273
 
 # Standard pressure (Pa)
