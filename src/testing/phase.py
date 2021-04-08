@@ -1,14 +1,6 @@
-from utils.phases.salt_water import Saltwater
 from utils.phases.ice import Ice
-
-def test_init_saltwater():
-    n = 2
-    T = 290
-    sw = Saltwater(n, T)
-    assert (n*sw.H_molar == sw.H)
-    assert (n*sw.S_molar == sw.S)
-    assert (n*sw.G_molar == sw.G)
-    assert (sw.T == T)
+from utils.phases.water import Water
+from utils.phases.salt import Salt
 
 def test_init_ice():
     n = 2
@@ -18,3 +10,21 @@ def test_init_ice():
     assert (n*ice.S_molar == ice.S)
     assert (n*ice.G_molar == ice.G)
     assert (ice.T == T)
+
+def test_init_water():
+    n = 2
+    T = 320
+    water = Water(n, T)
+    assert (n*water.H_molar == water.H)
+    assert (n*water.S_molar == water.S)
+    assert (n*water.G_molar == water.G)
+    assert (water.T == T)
+
+def test_init_salt():
+    n = 2
+    T = 320
+    salt = Salt(n, T)
+    assert (n*salt.H_molar == salt.H)
+    assert (n*salt.S_molar == salt.S)
+    assert (n*salt.G_molar == salt.G)
+    assert (salt.T == T)

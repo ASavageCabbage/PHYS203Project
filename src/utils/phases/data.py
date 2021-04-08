@@ -48,7 +48,7 @@ ICE_HF = 0 # TODO: Find this
 
 # Standard salt enthalpy of formation (J/mol)
 # https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=6F
-SALT_HF = -411120
+SOLID_SALT_HF = -411120
 
 # Standard enthalpy of solution for salt (J/mol) (infinitely dilute solution)
 # http://hbcponline.com/faces/documents/05_13/05_13_0005.xhtml
@@ -57,7 +57,7 @@ SALT_SOLUTION_H = 3880
 # Standard molar entropy of H2 (J/mol K) (all from NIST)
 GAS_H_S = 130.68
 
-# Standard molar entropy of 02 (J/mol K)
+# Standard molar entropy of O2 (J/mol K)
 GAS_O_S = 205.15
 
 # Standard molar entropy of Na (J/mol K)
@@ -113,7 +113,7 @@ NACL_MOLAR_RELATIVE_CP = {
 }
 
 # From https://www.engineeringtoolbox.com/ice-thermal-properties-d_576.html
-# (J/mol K) at 0C
+# (kJ/kg K) at 0C
 ICE_CP = {
     273: 2.050,
     268: 2.027,
@@ -122,3 +122,9 @@ ICE_CP = {
     253: 1.943,
     248: 1.913
 }
+# (J/mol K)
+ICE_CP_MOL = {t: val*18 for t, val in ICE_CP.items()}
+
+# From https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=2&Type=JANAFS&Table=on
+# (J/mol K) at 298 K
+SOLID_SALT_CP = 50.50
