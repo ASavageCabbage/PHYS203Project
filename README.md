@@ -4,14 +4,6 @@
 
 Navigate to the `src` directory and run `python main.py <args>`. Call `main.py -h` for help.
 
-## Overview
-Simulation of ice-water transition with and without the presence of salt.
-- Macroscopic descriptions of stability (internal energy, Gibbs free energy, entropy, etc.)
-- Microscopic description of surface interaction at interface between water and ice
-
-Investigate system around 0 to -20 degrees at atmospheric pressure (at least initially).
-- Have parameters for pressure and temperature?
-
 ## Contributing
 
 File structure:
@@ -30,15 +22,20 @@ How to make a change:
 3. Pull request feature branch to main branch
 4. Ask for "code review"
 
-## Considerations
+## Simulation structure
 
-Dimensionality problem:
-- 2D simulation, 1D interface? Issues with degrees of freedom and structure of water
-- 3D simulation, 2D interface (more difficult, but more accurate depiction)
-- How do we figure out a probability of bond breaking? (seems to be no tables on this)
+Salt-water-ice [phase diagram](https://www.tf.uni-kiel.de/matwis/amat/iss/kap_6/illustr/i6_2_2.html))
+- Try to replicate top-left corner: interaction between liquid+solid and liquid
 
-Freezing brine ([phase diagram](https://www.tf.uni-kiel.de/matwis/amat/iss/kap_6/illustr/i6_2_2.html))
-- Complicated, figure it out
+Simulation components:
+- Phase objects: ice, water, salt
+- Reservoir to act as a heat bath and calorimeter (tallying heat flow)
+- Sub-system to handle mixing between water and salt (enthalpy of dissolution, entropy of mixing, etc)
+- Iterator to find optimal global state via gradient descent
+
+The goal is to recreate the phase diagram linked above near the regime where salt water is liquid and unsaturated.
+
+## Notes
 
 Internal Energy/Entropy of Water/Ice
 - tabulate on per-molar basis, assume this is roughly constant with temperature?

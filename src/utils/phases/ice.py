@@ -1,6 +1,4 @@
 # ice phase
-
-import logging
 import numpy as np
 
 from utils.phases import *
@@ -27,7 +25,7 @@ class Ice(Phase):
 
     # calculates molar heat capacity (at constant pressure)
     def calc_c_molar(self):
-        return find_nearest_value(self.T, ICE_CP)
+        return find_nearest_value(self.T, ICE_CP_MOL)
 
     # calculates enthalpy of formation per mole as a function 
     # temperature, assumes constant pressure and density
