@@ -87,6 +87,8 @@ class Subsystem:
                 self.S_mixing = 0
             else:
                 self.S_mixing = -n*R*(x*np.log(x) + (1-x)*np.log(1-x))
+        else:
+            self.S_mixing = 0
 
     # updates the total enthalpy of mixing of the salt dissolved in water
     # assumes constant enthalpy of mixing, which is again inaccurate

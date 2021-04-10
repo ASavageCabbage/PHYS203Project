@@ -58,7 +58,7 @@ WATER_HFUSION = 6006.294352
 WATER_SFUSION = WATER_HFUSION/STP_T
 
 # Standard molar enthalpy of formation at STP (J/mol)
-ICE_HF = LIQUID_WATER_CP*(STP_T-SATP_T) - WATER_HFUSION
+ICE_HF = LIQUID_WATER_HF + LIQUID_WATER_CP*(STP_T-SATP_T) - WATER_HFUSION
 
 # Standard salt enthalpy of formation (J/mol)
 # https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=6F
@@ -93,7 +93,7 @@ LIQUID_WATER_S = 69.95
 LIQUID_WATER_SR = LIQUID_WATER_S - GAS_H_S - GAS_O_S/2
 
 # Standard molar entropy of solid ice at STP (J/mol K)
-ICE_S = LIQUID_WATER_CP*log(STP_T/SATP_T) - WATER_SFUSION
+ICE_S = LIQUID_WATER_S + LIQUID_WATER_CP*log(STP_T/SATP_T) - WATER_SFUSION
 
 # Standard molar entropy of formation of solid ice (J/mol K)
 ICE_SR = ICE_S - GAS_H_S - GAS_O_S/2

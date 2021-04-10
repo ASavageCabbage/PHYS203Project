@@ -18,13 +18,11 @@ class System:
         return self.ice.G + self.subsystem.G
 
     # moves n particles of ice to water, or n particles of water
-    # to ice if n is negative. returns how many moles of ice/water
-    # actually got moved
+    # to ice if n is negative.
     def move_ice(self, n):
         if self.ice.n < n: # deal with cases of not enough moles being
             n = self.ice.n # available to move
         elif self.subsystem.water.n < (-n):
-            n = self.subsystem.water.n
+            n = -self.subsystem.water.n
         self.ice.add_moles(-n)
         self.subsystem.add_water(n)
-        return n

@@ -1,5 +1,5 @@
 # methods used to optimize (minimze) the Gibbs energy of the system
-# TODO: Do this legit. Right now I'm just trying something
+# TODO: Add a way to handle equilibrium, right now it's a bit random
 
 import logging
 import numpy as np
@@ -13,21 +13,21 @@ class Optimizer:
     # constructs and returns minimizng function for particular system
     def minimze_Gibbs_func(system):
         
+        toy_system = deepcopy(system)
+
         # function that returns the Gibbs energy for a particular system,
         # as a function of the ratio of n_ice/(n_ice + n_water)
         # input must be between zero and one
         def find_Gibbs(x):
-            toy_system = deepcopy(system)
             Optimizer.adjust_x(toy_system, x)
             return toy_system.calc_G()
 
-        print(find_Gibbs(0),find_Gibbs(1))
         return find_Gibbs
 
     # optimizes Gibss of the given system
     def optimize(system):
         func = Optimizer.minimze_Gibbs_func(system)
-        result = minimize_scalar(func)
+        result = minimize_scalar(func, bounds=(0,1), method='bounded')
         optimal_x = result.x
         Optimizer.adjust_x(system, optimal_x)
 
