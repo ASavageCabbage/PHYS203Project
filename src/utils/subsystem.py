@@ -1,8 +1,9 @@
 # class handling interplay between water, salt, and saltwater
+import logging
+import numpy as np
 
-from utils.phases import Water, Salt
-from utils import *
-from math import log
+from utils.phases import *
+from utils.absolute import gibbs
 
 class Subsystem:
 
@@ -20,12 +21,12 @@ class Subsystem:
 
     # add n moles of water to the system
     def add_water(self, n):
-        self.water += n
+        self.water.add_moles(n)
         self.update()
     
     # add n moles of salt to the system
     def add_salt(self, n):
-        self.salt += n
+        self.salt.add_moles(n)
         self.update()
 
     # updates all quantities
@@ -42,6 +43,9 @@ class Subsystem:
     # dissolves the maximum amount of salt in water as possible (or precipitates
     # salt out of the water if necessary). 
     def update_saltwater(self):
+        if self.water.n == 0:
+            self.precipitate(self.n_dissolved)
+            return
         concentration = self.n_dissolved/self.water.n
         if concentration < MAX_C:
             to_dissolve = (MAX_C - concentration)*self.water.n
@@ -77,8 +81,9 @@ class Subsystem:
     # https://web.mit.edu/lienhard/www/Thermophysical_properties_of_seawater-DWT-16-354-2010.pdf
     def update_S_mixing(self):
         n = self.water.n + self.n_dissolved
-        x = self.n_dissolved/n
-        self.S_mixing = -n*R*(x*log(x) + (1-x)*log(1-x))
+        if n > 0:
+            x = self.n_dissolved/n
+            self.S_mixing = -n*R*(x*np.log(x) + (1-x)*np.log(1-x))
 
     # updates the total enthalpy of mixing of the salt dissolved in water
     # assumes constant enthalpy of mixing, which is again inaccurate

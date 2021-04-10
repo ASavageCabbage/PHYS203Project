@@ -1,6 +1,7 @@
 from utils.phases.ice import Ice
 from utils.phases.water import Water
 from utils.phases.salt import Salt
+from utils.system import System
 
 def test_init_ice():
     n = 2
@@ -28,3 +29,10 @@ def test_init_salt():
     assert (n*salt.S_molar == salt.S)
     assert (n*salt.G_molar == salt.G)
     assert (salt.T == T)
+
+def test_init_system():
+    n_salt = 1
+    n_water = 0
+    n_ice = 1
+    T = 270
+    system = System(n_salt, n_water, n_ice, T)

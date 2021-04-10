@@ -47,13 +47,16 @@ class Phase:
     # adds n moles of phase to the phase object, this should handle updating
     # gibbs energy and internal energy itself
     def add_moles(self, n):
-        self.n = n
+        self.n += n
+        if self.n < 0:
+            self.n = 0
         self.update()
 
     # adds/removes an amount of energy e from the system as heat, and updates
     # temperature accordingly
     def add_heat(self, e):
-        self.T += e/(self.c_molar * self.n)
+        if self.n > 0:
+            self.T += e/(self.c_molar * self.n)
         self.update()
     
     ## Unimplemented functions (must be implemented by concrete class)

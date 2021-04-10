@@ -13,10 +13,13 @@ def find_nearest_value(key, table):
     
     ordered_keys.sort()
     smaller = [i for i, item in enumerate(ordered_keys) if item < key]
-    if len(smaller) > 0:
+    if len(smaller) == 0:
+        prev = 0
+    elif len(smaller) < len(ordered_keys):
         prev = smaller[-1]
     else:
         prev = len(ordered_keys) - 1
+        
     before = ordered_keys[prev]
     try:
         after = ordered_keys[prev + 1]
@@ -128,3 +131,16 @@ ICE_CP_MOL = {t: val*18 for t, val in ICE_CP.items()}
 # From https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=2&Type=JANAFS&Table=on
 # (J/mol K) at 298 K
 SOLID_SALT_CP = 50.50
+
+# thermodynamics data for System and Subsystem classes
+
+# maximum molar salt concentration in water, 10C
+# http://hbcponline.com/faces/contents/InteractiveTable.xhtml
+MAX_C = 0.11007336
+
+# from Wikipedia, J/(mol K)
+R = 8.31446261815324
+
+# enthalpy of solution of salt in water, 25C, (J/mol)
+# http://hbcponline.com/faces/documents/05_13/05_13_0005.xhtml
+H_sol = 3880

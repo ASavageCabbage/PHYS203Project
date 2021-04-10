@@ -1,7 +1,8 @@
 # class handling the interplay of different distinct phases in a system
 # and the resivoir
 
-from utils import *
+from utils.phases import *
+from utils.subsystem import Subsystem
 
 class System:
 
@@ -15,4 +16,3 @@ class System:
     # calculates the total Gibbs energy of the system
     def calc_G(self):
         return self.ice.G + self.subsystem.G
-        
