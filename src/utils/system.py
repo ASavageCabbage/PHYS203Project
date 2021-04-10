@@ -26,3 +26,13 @@ class System:
             n = -self.subsystem.water.n
         self.ice.add_moles(-n)
         self.subsystem.add_water(n)
+
+    def get_heat_flow(self):
+        return self.subsystem.get_heat()
+
+    def get_state(self):
+        total_salt = self.subsystem.salt.n
+        dissolved_salt = self.subsystem.n_dissolved
+        total_water = self.subsystem.water.n
+        total_ice = self.ice.n
+        return total_salt, dissolved_salt, total_water, total_ice
