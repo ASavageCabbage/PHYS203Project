@@ -68,5 +68,9 @@ General ideas
 - heat capacity is used to compute changes in entropy from heat
 - salt assumed to only dissolve in water
 
+Data
+- Here's some interesting supercooled water data (no heat capacity sadly)
+- http://hbcponline.com/faces/documents/06_44/06_44_0001.xhtml
+
 ## Unresolved Issues
 - currently unknown whether an animation object works in a static class

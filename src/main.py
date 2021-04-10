@@ -5,6 +5,7 @@ import argparse
 
 from testing.imports import list_all_modules
 from testing.phase import *
+from utils.optimize import Optimizer
 
 def main():
     parser = argparse.ArgumentParser(description='Application entrypoint.')
@@ -28,7 +29,8 @@ def main():
         test_init_system()
     #
     # Rest of application functionality goes here
-    #
+    # 
+
     logging.info("Finished!")
 
 if __name__ == "__main__":

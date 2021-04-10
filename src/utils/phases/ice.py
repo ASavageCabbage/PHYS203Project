@@ -10,8 +10,6 @@ from utils.absolute import enthalpy, gibbs
 # pressure is assumed to be constant and atmospheric
 # heat capacities are assumed to be constant with respect to temperature
 # salt is assumed to be dissolved entirely in liquid water, not ice
-## TODO add function (or like derive it first) that does this
-# https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=2
 
 class Ice(Phase):
 
@@ -31,11 +29,11 @@ class Ice(Phase):
     # temperature, assumes constant pressure and density
     def calc_H_molar(self):
         delta_T = self.T - STP_T
-        return ICE_HF - self.c_molar*delta_T
+        return ICE_HF + self.c_molar*delta_T
 
     # calculates molar entropy of formation as a function of temperature
     def calc_S_molar(self):
-        return ICE_SR - self.c_molar*np.log(self.T/STP_T)
+        return ICE_SR + self.c_molar*np.log(self.T/STP_T)
 
     # calculates current gibbs per mole of phase
     def calc_G_molar(self):

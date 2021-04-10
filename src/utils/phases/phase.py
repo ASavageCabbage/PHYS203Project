@@ -45,7 +45,8 @@ class Phase:
     ## System access functions
 
     # adds n moles of phase to the phase object, this should handle updating
-    # gibbs energy and internal energy itself
+    # gibbs energy and internal energy itself, returns how many moles were
+    # added
     def add_moles(self, n):
         self.n += n
         if self.n < 0:
