@@ -25,6 +25,7 @@ def main():
         test_init_ice()
         test_init_water()
         test_init_salt()
+        test_init_system()
     #
     # Rest of application functionality goes here
     #

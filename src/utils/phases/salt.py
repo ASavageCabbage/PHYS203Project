@@ -40,4 +40,4 @@ class Salt(Phase):
 
     # calculates current gibbs per mole of phase
     def calc_G_molar(self):
-        return gibbs(self.H, self.T, self.S_molar)
+        return gibbs(self.H_molar, self.T, self.S_molar)
