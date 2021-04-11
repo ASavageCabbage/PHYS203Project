@@ -2,7 +2,6 @@
 # TODO: Add a way to handle equilibrium, right now it's a bit random
 
 import logging
-import numpy as np
 from scipy.optimize import minimize_scalar
 from copy import deepcopy
 
@@ -36,3 +35,16 @@ def adjust_x(system, x):
     dx = x_current - x
     dn_ice = dx*n_total
     system.move_ice(dn_ice)
+
+# generate a 2D heatmap of system states for a range of temperatures and salt amounts
+def phase_diagram(temps, salts, n_water=1, n_ice=0):
+    heatmap = []
+    for temp in temps:
+        row = []
+        for n_salt in salts:
+            system = System(n_salt, n_water, n_ice, temp)
+            optimize(system)
+            total_salt, dissolved_salt, total_water, total_ice = system.get_state()
+            row.append(total_ice)
+        heatmap.append(row)
+    return heatmap
