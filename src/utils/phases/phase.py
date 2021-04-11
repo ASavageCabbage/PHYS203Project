@@ -18,7 +18,8 @@ class Phase:
         self.n = 0
         self.T = initial_T
         self.add_moles(n)
-        self.add_heat(self.c_molar*self.n*(T - initial_T))
+        self.T = T # self.add_heat breaks down at 0mols, this is a quick
+        self.update() # fix for now # TODO: Make a permanent fix
 
     # updates all quantities
     def update(self):

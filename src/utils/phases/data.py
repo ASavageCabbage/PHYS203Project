@@ -1,5 +1,4 @@
-# TODO: Manually calculate the heat of formation and standard entropy for
-# ice at STP
+from math import log
 
 # Helper functions
 def find_nearest_value(key, table):
@@ -34,8 +33,8 @@ def find_nearest_value(key, table):
 # tables of constants
 
 # Standard temperatures (K)
-SATP_T = 298
-STP_T = 273
+SATP_T = 298.15
+STP_T = 273.15
 
 # Standard pressure (Pa)
 STP_P = 101325
@@ -46,8 +45,20 @@ LIQUID_WATER_MOLAR_CONC = 55.5e-3
 # Standard molar enthalpy of formation (J/mol)
 LIQUID_WATER_HF = -285830
 
-# Standard molar enthalpy of formation (J/mol)
-ICE_HF = 0 # TODO: Find this
+# From https://www.engineeringtoolbox.com/specific-heat-capacity-water-d_660.html
+# (J/mol K) at 0C
+LIQUID_WATER_CP = 76.026
+
+# Standard enthalpy of fusion for water into ice, STP (J/mol)
+# http://hbcponline.com/faces/documents/06_44/06_44_0001.xhtml
+WATER_HFUSION = 6006.294352
+
+# Standard entropy of fusion for water into ice, STP (J/mol)
+# https://en.wikipedia.org/wiki/Entropy_of_fusion
+WATER_SFUSION = WATER_HFUSION/STP_T
+
+# Standard molar enthalpy of formation at STP (J/mol)
+ICE_HF = LIQUID_WATER_HF + LIQUID_WATER_CP*(STP_T-SATP_T) - WATER_HFUSION
 
 # Standard salt enthalpy of formation (J/mol)
 # https://webbook.nist.gov/cgi/cbook.cgi?ID=C7647145&Mask=6F
@@ -81,15 +92,11 @@ LIQUID_WATER_S = 69.95
 # Standard molar entropy of formation of water (J/mol K)
 LIQUID_WATER_SR = LIQUID_WATER_S - GAS_H_S - GAS_O_S/2
 
-# Standard molar entropy of solid ice (J/mol K)
-ICE_S = 0 # TODO: FIND THIS
+# Standard molar entropy of solid ice at STP (J/mol K)
+ICE_S = LIQUID_WATER_S + LIQUID_WATER_CP*log(STP_T/SATP_T) - WATER_SFUSION
 
 # Standard molar entropy of formation of solid ice (J/mol K)
 ICE_SR = ICE_S - GAS_H_S - GAS_O_S/2
-
-# From https://www.engineeringtoolbox.com/specific-heat-capacity-water-d_660.html
-# (J/mol K) at 0C
-LIQUID_WATER_CP = 76.026
 
 # From https://pubs.acs.org/doi/pdf/10.1021/ja01377a001 (page 331)
 # Molality of NaCl vs heat capacity of solution
@@ -144,3 +151,7 @@ R = 8.31446261815324
 # enthalpy of solution of salt in water, 25C, (J/mol)
 # http://hbcponline.com/faces/documents/05_13/05_13_0005.xhtml
 H_sol = 3880
+
+# latent heat of ice->water transition, J/mol
+# https://www.engineeringtoolbox.com/latent-heat-melting-solids-d_96.html
+L_WATER = 334*18.01528
