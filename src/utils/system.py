@@ -12,6 +12,7 @@ class System:
         self.ice = Ice(n_ice, T)
         self.subsystem = Subsystem(water, salt)
         self.T = T
+        self.org_water_n = n_water
     
     # calculates the total Gibbs energy of the system
     def calc_G(self):
@@ -28,7 +29,7 @@ class System:
         self.subsystem.add_water(n)
 
     def get_heat_flow(self):
-        return self.subsystem.get_heat()
+        return self.subsystem.get_heat() + (self.subsystem.water.n - self.org_water_n)*L_WATER
 
     def get_state(self):
         total_salt = self.subsystem.salt.n

@@ -151,3 +151,7 @@ R = 8.31446261815324
 # enthalpy of solution of salt in water, 25C, (J/mol)
 # http://hbcponline.com/faces/documents/05_13/05_13_0005.xhtml
 H_sol = 3880
+
+# latent heat of ice->water transition, J/mol
+# https://www.engineeringtoolbox.com/latent-heat-melting-solids-d_96.html
+L_WATER = 334*18.01528
