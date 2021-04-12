@@ -11,7 +11,7 @@ class Subsystem:
         self.water = water
         self.salt = salt
         self.n_dissolved = 0 # number of moles of salt dissolved in water
-        self.S_mixing = 0 # entropy change from mixing of saltwater
+        self.S_saltwater = 0 # entropy of the saltwater
         self.H_mixing = 0 # enthalpy change from mixing saltwater
         self.update()
 
@@ -37,7 +37,7 @@ class Subsystem:
     # caculates the current total Gibbs energy of the subsystem
     def calc_G(self):
         H = self.water.H + self.salt.H + self.H_mixing
-        S = self.water.S + self.salt.S + self.S_mixing
+        S = self.S_saltwater + self.salt.S_molar*(self.salt.n - self.n_dissolved)
         return gibbs(H,S,self.water.T)
     
     # dissolves the maximum amount of salt in water as possible (or precipitates
@@ -62,7 +62,7 @@ class Subsystem:
         if n_salt > (self.salt.n - self.n_dissolved):
             n_salt = self.salt.n - self.n_dissolved
         self.n_dissolved += n_salt
-        self.update_S_mixing()
+        self.update_S_saltwater()
         self.update_H_mixing()
 
     # precipitates n moles of salt, or all salt if n moles are not available
@@ -71,24 +71,32 @@ class Subsystem:
         if n_salt > self.n_dissolved:
             n_salt = self.n_dissolved
         self.n_dissolved -= n_salt
-        self.update_S_mixing()
+        self.update_S_saltwater()
         self.update_H_mixing()
 
-    # updates the entropy of mixing of the salt dissolved in water
+    # updates the entropy of the salt dissolved in water
     # entropy of mixing assumes an ideal mixture (i.e. no interactions),
     # which is fairly inaccurate for salt in water
     # if we decided to go nuts, this has some data 
     # https://web.mit.edu/lienhard/www/Thermophysical_properties_of_seawater-DWT-16-354-2010.pdf
-    def update_S_mixing(self):
+    def update_S_saltwater(self):
+        initial_conditions = LIQUID_WATER_SR*self.water.n + SOLID_SALT_SR*self.n_dissolved
+        cp = find_nearest_value(self.n_dissolved/self.water.n, NACL_MOLAR_RELATIVE_CP)*LIQUID_WATER_CP
+        dS_T = cp*np.log(self.water.T/SATP_T)*self.water.n # change in entropy from temperature
+        S_mixing = self.calc_S_mixing()
+        self.S_saltwater = dS_T + S_mixing + initial_conditions
+        
+    # returns the entropy of mixing, assuming an ideal solution, at SATP
+    def calc_S_mixing(self):
         n = self.water.n + self.n_dissolved
         if n > 0:
             x = self.n_dissolved/n
             if x == 0:
-                self.S_mixing = 0
+                return 0
             else:
-                self.S_mixing = -n*R*(x*np.log(x) + (1-x)*np.log(1-x))
+                return -n*R*(x*np.log(x) + (1-x)*np.log(1-x))
         else:
-            self.S_mixing = 0
+            return 0
 
     # updates the total enthalpy of mixing of the salt dissolved in water
     # assumes constant enthalpy of mixing, which is again inaccurate
