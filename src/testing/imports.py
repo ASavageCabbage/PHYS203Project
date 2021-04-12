@@ -2,9 +2,9 @@
 
 import logging
 
-import utils.phases, utils.absolute, utils.differential, utils.system, utils.graphics, utils.optimize
+import utils.phases, utils.absolute, utils.differential, utils.system, utils.optimize
 
-PACKAGES = [utils.phases, utils.absolute, utils.differential, utils.system, utils.graphics, utils.optimize]
+PACKAGES = [utils.phases, utils.absolute, utils.differential, utils.system, utils.optimize]
 
 def list_all_modules():
     for pkg in PACKAGES:
