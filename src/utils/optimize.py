@@ -37,13 +37,13 @@ def adjust_x(system, x):
     system.move_ice(dn_ice)
 
 # generate a 2D heatmap of system states for a range of temperatures and salt amounts
-def phase_diagram(temps, salts, n_water=1, n_ice=0):
+def phase_diagram(temps, salts, n_water=0, n_ice=1):
     heatmap = []
     for temp in temps:
         row = []
         for n_salt in salts:
             system = System(n_salt, n_water, n_ice, temp)
             optimize(system)
-            row.append(system.get_state())
+            row.append((*system.get_state(), system.get_heat_flow()))
         heatmap.append(row)
     return heatmap

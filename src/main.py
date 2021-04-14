@@ -33,10 +33,10 @@ def optimize_once(temp, n_salt, n_water, n_ice):
         + f"Delta G = {delta_G} J, Delta H = {heat} J"
     )
 
-TOTAL_SALT, DISSOLVED_SALT, TOTAL_WATER, TOTAL_ICE = range(4)
+TOTAL_SALT, DISSOLVED_SALT, TOTAL_WATER, TOTAL_ICE, HEAT_FLOW = range(5)
 DIAGRAM_TYPES = {
     "ice": (
-        lambda a: a[TOTAL_SALT],
+        lambda a: a[TOTAL_ICE],
         "Fraction of water frozen"
     ),
     "saturation": (
@@ -50,6 +50,10 @@ DIAGRAM_TYPES = {
     "mixture": (
         lambda a: abs(a[TOTAL_WATER] - a[TOTAL_ICE]),
         "Highlights regions where water and ice coexist"
+    ),
+    "heat": (
+        lambda a: a[HEAT_FLOW],
+        "Heat flow into the system (J)"
     )
 }
 
