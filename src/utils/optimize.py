@@ -44,6 +44,6 @@ def phase_diagram(temps, salts, n_water=1, n_ice=0):
         for n_salt in salts:
             system = System(n_salt, n_water, n_ice, temp)
             optimize(system)
-            row.append(system.get_state())
+            row.append((*system.get_state(), system.get_heat_flow()))
         heatmap.append(row)
     return heatmap

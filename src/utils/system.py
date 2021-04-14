@@ -29,7 +29,7 @@ class System:
         self.subsystem.add_water(n)
 
     def get_heat_flow(self):
-        return self.subsystem.get_heat() + (self.subsystem.water.n - self.org_water_n)*L_WATER
+        return self.subsystem.get_heat()
 
     def get_state(self):
         total_salt = self.subsystem.salt.n
