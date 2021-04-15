@@ -4,6 +4,7 @@ import logging
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
+plt.rcParams.update({'font.size': 16})
 
 from testing.imports import list_all_modules
 from testing.phase import *
@@ -61,17 +62,26 @@ def generate_pd(t0, t1, s0, s1, n=100, dtype="ice", cmap="Greys"):
     logging.info(f"Generating <{dtype}> phase diagram for T = [{t0}, {t1}] K and moles of salt = [{s0}, {s1}]...")
     temps = np.linspace(t1, t0, n)
     salts = np.linspace(s0, s1, n)
-    heatmap = np.array(phase_diagram(temps, salts))
+    heatmap_values = np.array(phase_diagram(temps, salts))
     pick, label = DIAGRAM_TYPES[dtype]
-    heatmap = [[pick(item) for item in row] for row in heatmap]
+    heatmap = [[pick(item) for item in row] for row in heatmap_values]
 
-    fig, ax = plt.subplots()
-    ax.set_xlabel("Salt Molarity (mols NaCl/mols H2O)")
+    fig, ax = plt.subplots(figsize=(20.92, 11.77))
+    ax.set_xlabel("Salt Molar Concentration (mols NaCl/mols H2O)")
     ax.set_ylabel("Temperature (C)")
+    c0 = t0-273.15
+    c1 = t1-273.15
     pos = ax.imshow(
         np.array(heatmap), cmap=cmap, interpolation="none",
-        extent=[s0, s1, t0-273.15, t1-273.15], aspect=(s1-s0)/(t1-t0)
+        extent=[s0, s1, c0, c1], aspect=(s1-s0)/(t1-t0)
     )
+    # Maximum saturation
+    ax.plot([MAX_C, MAX_C], [c0, c1], 'k--')
+    # Freezing point
+    freeze = [DIAGRAM_TYPES["ice"][0](row[-1]) for row in heatmap_values]
+    freeze = temps[[i for i, item in enumerate(freeze) if item > 0.9][0]]-273.15
+    ax.plot([s0, s1], [freeze, freeze], 'k--')
+
     cbar = fig.colorbar(pos, ax=ax)
     cbar.set_label(label)
     plt.show()
@@ -126,7 +136,7 @@ def main():
         generate_pd(
             *args.pd_args,
             dtype=dtype if dtype else "ice",
-            cmap=cmap if cmap else "Greys"
+            cmap=cmap if cmap else "Reds"
         )
 
     logging.info("Finished!")
